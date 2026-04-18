@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>قائمة أسعار الخام النقي — مصنع المروج</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g1:#06030f;--g2:#120828;--g3:#1e0e42;--g4:#2a1260;
+  --acc:#b48eff;--accl:#dcc8ff;--accd:#6030c0;
+  --white:#f5f0ff;--ink:#0e0820;--mid:#2a1a50;--lite:#7060a0;
+  --border:#c0a8ff26;--bordl:#d8c8ff20;--bg:#f0eeff;
+  --wa:#25D366;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{overflow-x:hidden;}
+body{overflow-x:hidden;}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:96px;}
+
+/* HEADER */
+.header{
+  background:linear-gradient(160deg,var(--g1) 0%,var(--g2) 45%,var(--g3) 100%);
+  padding:26px 20px 38px;position:relative;overflow:hidden;text-align:center;
+}
+.header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:22px;background:var(--bg);border-radius:22px 22px 0 0;}
+.hr-ring{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.05);pointer-events:none;}
+.hr-ring.a{width:300px;height:300px;top:-110px;right:-70px;}
+.hr-ring.b{width:200px;height:200px;top:-50px;left:-60px;}
+.header::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(74,158,255,.15) 0%,transparent 70%);}
+
+.brand{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:40px;padding:6px 16px 6px 7px;margin-bottom:14px;}
+.brand-ico{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--accd),var(--acc));display:flex;align-items:center;justify-content:center;font-size:15px;}
+.brand-nm{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:700;}
+
+.tier-badge{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--accd),var(--acc));border-radius:14px;padding:11px 22px;margin-bottom:18px;box-shadow:0 6px 24px rgba(74,158,255,.35);}
+.tier-ico{font-size:22px;}
+.tier-t{font-size:13px;font-weight:800;color:var(--white);}
+.tier-s{font-size:10.5px;color:rgba(255,255,255,.7);display:block;margin-top:2px;}
+
+.header h1{font-size:26px;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:6px;}
+.header h1 em{color:var(--accl);font-style:normal;}
+.h-sub{font-size:12px;color:rgba(255,255,255,.45);margin-bottom:18px;}
+
+.tags{display:flex;justify-content:center;flex-wrap:wrap;gap:7px;}
+.tag{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:5px 13px;font-size:11.5px;font-weight:700;color:rgba(255,255,255,.88);display:flex;align-items:center;gap:5px;}
+.td{width:6px;height:6px;border-radius:50%;background:var(--accl);flex-shrink:0;}
+
+
+
+/* STICKY BAR */
+.sbar{background:var(--g2);padding:10px 14px;display:flex;gap:9px;align-items:center;box-shadow:0 4px 20px rgba(0,0,0,.35);border-bottom:1px solid rgba(255,255,255,.06);}
+.sbox{flex:1;display:flex;align-items:center;background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.13);border-radius:12px;overflow:hidden;transition:border-color .2s;}
+.sbox:focus-within{border-color:var(--acc);}
+.sbox input{flex:1;background:transparent;border:none;outline:none;padding:9px 13px;color:var(--white);font-family:'Tajawal',sans-serif;font-size:14px;font-weight:500;direction:rtl;}
+.sbox input::placeholder{color:rgba(255,255,255,.28);}
+.sbox-icon{padding:0 11px;color:rgba(255,255,255,.35);font-size:15px;}
+.cnt-badge{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.13);border-radius:8px;padding:7px 11px;color:var(--accl);font-size:12px;font-weight:800;white-space:nowrap;}
+
+/* SIZE TABS */
+.size-tabs-wrap{
+  background:var(--g2);
+  padding:0 14px 12px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.size-tabs{
+  display:flex;gap:7px;overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding-bottom:2px;
+}
+.size-tabs::-webkit-scrollbar{display:none;}
+.stab{
+  flex-shrink:0;
+  background:rgba(255,255,255,.08);
+  border:1.5px solid rgba(255,255,255,.12);
+  border-radius:10px;
+  padding:8px 14px;
+  color:rgba(255,255,255,.6);
+  font-family:'Tajawal',sans-serif;
+  font-size:12.5px;font-weight:700;
+  cursor:pointer;
+  transition:all .18s;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  min-width:68px;
+  -webkit-user-select:none;
+}
+.stab .stab-size{font-size:14px;font-weight:900;line-height:1;}
+.stab .stab-sub{font-size:9.5px;opacity:.7;line-height:1;}
+.stab.active{
+  background:linear-gradient(135deg,var(--accd),var(--acc));
+  border-color:var(--acc);
+  color:var(--white);
+  box-shadow:0 4px 14px rgba(74,158,255,.4);
+}
+.stab.active .stab-sub{opacity:.85;}
+
+/* carton info strip */
+.carton-info{
+  margin-top:8px;
+  background:rgba(255,255,255,.06);
+  border-radius:8px;
+  padding:6px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:6px;
+}
+.ci-item{font-size:11px;color:rgba(255,255,255,.55);font-weight:600;display:flex;align-items:center;gap:5px;}
+.ci-item b{color:var(--accl);}
+
+/* LIST */
+.pw{padding:14px 14px 0;}
+.lhd{display:grid;grid-template-columns:1fr 62px 72px 84px;background:linear-gradient(135deg,var(--g2),var(--g4));border-radius:14px 14px 0 0;}
+.lhd-c{padding:10px 7px;font-size:10px;font-weight:800;color:var(--accl);text-align:center;letter-spacing:.3px;border-left:1px solid rgba(255,255,255,.09);line-height:1.4;}
+.lhd-c:first-child{text-align:right;padding-right:14px;border-left:none;color:var(--white);}
+
+.lbody{background:var(--white);border-radius:0 0 14px 14px;overflow:hidden;box-shadow:0 8px 28px rgba(10,22,40,.14);}
+.pr{display:grid;grid-template-columns:1fr 62px 72px 84px;border-bottom:1px solid #e8eef5;transition:background .1s;}
+.pr:last-child{border-bottom:none;}
+.pr:nth-child(even){background:#f5f8fc;}
+.pr:active{background:#dde8f5;}
+.pr.hidden{display:none;}
+
+.pn{min-width:0;overflow:hidden;padding:10px 12px 10px 8px;display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--mid);border-left:1px solid #e8eef5;}
+.pn-txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;}
+.pnum{width:20px;height:20px;border-radius:5px;background:#dde8f5;color:var(--lite);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+.pc,.ph,.pf{min-width:0;padding:8px 5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border-left:1px solid #e8eef5;}
+.pc{min-width:0;background:#eef4fb;}
+.ph{min-width:0;background:#e8f0fa;}
+.pf{min-width:0;background:#ddeaf7;}
+
+.pv{font-size:12.5px;font-weight:900;line-height:1;}
+.pl{font-size:9px;font-weight:600;margin-top:2px;color:var(--lite);}
+.pc .pv{color:var(--accd);}
+.ph .pv{color:var(--mid);font-size:12px;}
+.pf .pv{color:var(--accd);font-size:13px;}
+.pf .pl{color:var(--acc);}
+
+.nores{display:none;text-align:center;padding:48px 20px;color:var(--lite);}
+.nores.show{display:block;}
+
+/* SUMMARY */
+.summ{margin:14px 14px 0;background:linear-gradient(135deg,var(--g2),var(--g4));border-radius:14px;padding:16px;display:flex;justify-content:space-around;box-shadow:0 6px 20px rgba(10,22,40,.22);}
+.si{text-align:center;}
+.sn{font-size:19px;font-weight:900;color:var(--accl);line-height:1;}
+.sl{font-size:10px;color:rgba(255,255,255,.45);font-weight:600;margin-top:4px;}
+
+/* QUALITY STRIP */
+.quality-strip{margin:14px 14px 0;background:linear-gradient(135deg,#eef4fb,#dde8f5);border:1.5px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;}
+.qs-ico{font-size:26px;flex-shrink:0;}
+.qs-txt .qs-t{font-size:12.5px;font-weight:800;color:var(--mid);margin-bottom:3px;}
+.qs-txt .qs-s{font-size:11px;color:var(--lite);line-height:1.5;}
+.qs-badge{margin-right:auto;flex-shrink:0;background:linear-gradient(135deg,var(--accd),var(--acc));color:var(--white);border-radius:10px;padding:8px 14px;text-align:center;box-shadow:0 4px 14px rgba(74,158,255,.3);}
+.qs-top{font-size:14px;font-weight:900;color:var(--accl);line-height:1;}
+.qs-lbl{font-size:9px;color:rgba(255,255,255,.65);font-weight:600;margin-top:2px;display:block;}
+
+/* TERMS */
+.tw{padding:14px 14px 0;}
+.ttl{font-size:14px;font-weight:800;color:var(--mid);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.ttl::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,var(--bordl),transparent);}
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.tcard{background:var(--white);border:1px solid var(--bordl);border-radius:12px;padding:12px 11px;display:flex;align-items:flex-start;gap:8px;box-shadow:0 2px 8px rgba(10,22,40,.05);}
+.tci{font-size:19px;flex-shrink:0;line-height:1.1;}
+.tct{font-size:11px;font-weight:800;color:var(--mid);margin-bottom:2px;}
+.tcs{font-size:10px;color:var(--lite);line-height:1.45;}
+
+/* CTA */
+.ctaw{padding:16px 14px 0;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.ctalbl{font-size:12px;color:var(--lite);text-align:center;}
+.wabtn{width:100%;background:var(--wa);color:var(--white);text-decoration:none;display:flex;align-items:center;justify-content:center;gap:12px;padding:15px 20px;border-radius:16px;font-size:15px;font-weight:800;box-shadow:0 6px 24px rgba(37,211,102,.35);}
+.wabtn:active{opacity:.9;}
+.wa-ico-l{font-size:24px;}
+.wt-main{font-size:15px;font-weight:800;}
+.wt-sub{font-size:11px;opacity:.8;margin-top:2px;display:block;}
+
+.ftr{padding:20px 20px 10px;text-align:center;}
+.ftr p{font-size:11px;color:var(--lite);}
+.ftr strong{color:var(--mid);}
+
+.waf{position:fixed;bottom:20px;left:20px;z-index:999;width:58px;height:58px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center;font-size:26px;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.55);animation:plse 2.5s infinite;}
+@keyframes plse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.55);}50%{box-shadow:0 4px 32px rgba(37,211,102,.85),0 0 0 10px rgba(37,211,102,.1);}}
+
+@media(min-width:600px){
+  .header h1{font-size:32px;}
+  .pw,.tw,.ctaw,.ftr{max-width:680px;margin-left:auto;margin-right:auto;}
+  .summ,.quality-strip{max-width:680px;margin-left:auto;margin-right:auto;}
+  .size-tabs-wrap{padding:0 calc(50% - 340px) 12px;}
+  .lhd,.pr{grid-template-columns:1fr 80px 92px 108px;}
+  .tgrid{grid-template-columns:repeat(3,1fr);}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="hr-ring a"></div><div class="hr-ring b"></div>
+  <div class="brand">
+    <div class="brand-ico">🌿</div>
+    <span class="brand-nm">مصنع المروج للزيوت الطبيعية</span>
+  </div>
+  <div class="tier-badge">
+    <span class="tier-ico">🔬</span>
+    <div><div class="tier-t">Raw Pure — 95%+ نقاء</div><span class="tier-s">جملة مباشرة من المصنع</span></div>
+  </div>
+  <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(180,142,255,.1);border:1px solid rgba(180,142,255,.2);border-radius:8px;padding:7px 16px;margin-bottom:16px;font-size:11px;font-weight:700;color:var(--accl);letter-spacing:1px;">
+  🔬 Pharmaceutical Grade · ضغط بارد عميق + تقطير
+</div>
+<h1>أسعار <em>الخام النقي</em><br>مباشرة من المصنع</h1>
+  <p class="h-sub">نقاء 95%+ · للصيدليات والتصدير الطبي</p>
+  <div class="tags">
+    <div class="tag"><div class="td"></div>49 صنف</div>
+    <div class="tag"><div class="td"></div>5 أحجام</div>
+    <div class="tag"><div class="td"></div>من نص كرتونة</div>
+    <div class="tag"><div class="td"></div>سداد 55 يوم</div>
+  </div>
+</div>
+
+<!-- STICKY TOP -->
+<div id="fixedTop" style="position:-webkit-sticky;position:sticky;top:0;z-index:300;will-change:transform;">
+<div class="sbar">
+  <div class="sbox">
+    <input type="text" id="srch" placeholder="ابحث عن زيت..." oninput="doFilter()">
+    <span class="sbox-icon">🔍</span>
+  </div>
+  <div class="cnt-badge" id="cnt">49</div>
+</div>
+
+<!-- SIZE TABS -->
+<div class="size-tabs-wrap">
+  <div class="size-tabs" id="sizeTabs">
+    <div class="stab active" onclick="selectSize(0)">
+      <div class="stab-size">1 لتر</div>
+      <div class="stab-sub">1000 مل</div>
+    </div>
+    <div class="stab" onclick="selectSize(1)">
+      <div class="stab-size">500 مل</div>
+      <div class="stab-sub">نص لتر</div>
+    </div>
+    <div class="stab" onclick="selectSize(2)">
+      <div class="stab-size">250 مل</div>
+      <div class="stab-sub">ربع لتر</div>
+    </div>
+    <div class="stab" onclick="selectSize(3)">
+      <div class="stab-size">125 مل</div>
+      <div class="stab-sub">⅛ لتر</div>
+    </div>
+    <div class="stab" onclick="selectSize(4)">
+      <div class="stab-size">30 مل</div>
+      <div class="stab-sub">مصغّر</div>
+    </div>
+  </div>
+  <div class="carton-info" id="cartonInfo">
+    <div class="ci-item">📦 نص كرتونة: <b id="halfQtyLbl">6 زجاجة</b></div>
+    <div class="ci-item">🧃 كرتونة كاملة: <b id="fullQtyLbl">12 زجاجة</b></div>
+    <div class="ci-item">💧 سعر الزجاجة محسوب من سعر اللتر</div>
+  </div>
+</div>
+</div><!-- /fixed-top -->
+
+<!-- TABLE HEAD -->
+<div class="pw">
+  <div class="lhd">
+    <div class="lhd-c">المنتج</div>
+    <div class="lhd-c" id="hdrUnit">💧 سعر الزجاجة<br><span style="font-size:9px;opacity:.7" id="hdrUnitSub">(جنيه)</span></div>
+    <div class="lhd-c" id="hdrHalf">📦 نص كرتونة<br><span style="font-size:9px;opacity:.7" id="hdrHalfSub">(6 زجاجة)</span></div>
+    <div class="lhd-c" id="hdrFull">🔬 كرتونة كاملة<br><span style="font-size:9px;opacity:.7" id="hdrFullSub">(12 زجاجة)</span></div>
+  </div>
+  <div class="lbody" id="list"></div>
+  <div class="nores" id="nores">
+    <div style="font-size:38px;margin-bottom:10px">🔍</div>
+    <div style="font-size:14px;font-weight:700;color:var(--mid)">مفيش نتائج</div>
+    <div style="font-size:12px;margin-top:4px;color:var(--lite)">جرب كلمة تانية</div>
+  </div>
+</div>
+
+<div class="summ">
+  <div class="si"><div class="sn">49</div><div class="sl">إجمالي الأصناف</div></div>
+  <div class="si"><div class="sn" id="summSize">1 لتر</div><div class="sl">الحجم المختار</div></div>
+  <div class="si"><div class="sn">55 يوم</div><div class="sl">أجل السداد</div></div>
+</div>
+
+<div class="quality-strip">
+  <div class="qs-ico">💎</div>
+  <div class="qs-txt">
+    <div class="qs-t">Pharmaceutical Grade — أنقى مستوى</div>
+    <div class="qs-s">تقطير بخار + ضغط بارد عميق<br>للتصدير الطبي والصيدليات</div>
+  </div>
+  
+    <div class="tcard"><div class="tci">🏷️</div><div><div class="tct">الأحجام المتاحة</div><div class="tcs">1ل · 500مل · 250مل · 125مل · 30مل</div></div></div>
+    <div class="tcard"><div class="tci">💰</div><div><div class="tct">شروط الدفع</div><div class="tcs">30% مقدم والباقي 55 يوم</div></div></div>
+    <div class="tcard"><div class="tci">🎁</div><div><div class="tct">بونص</div><div class="tcs">بضاعة مجانية مع كل شحنة</div></div></div>
+    <div class="tcard"><div class="tci">💎</div><div><div class="tct">جودة المنتج</div><div class="tcs">الخام النقي 95%+ · جودة مميزة</div></div></div>
+    <div class="tcard"><div class="tci">🚛</div><div><div class="tct">التوصيل</div><div class="tcs">جميع المحافظات بالتنسيق</div></div></div>
+  </div>
+</div>
+
+<div class="ctaw">
+  <p class="ctalbl">للاستفسار وتأكيد الطلب — رد فوري</p>
+  <a href="https://wa.me/201013100491?text=السلام عليكم، عايز اعمل طلبية واستفيد بالخصم والبونص" class="wabtn" target="_blank">
+    <span class="wa-ico-l">💬</span>
+    <div><div class="wt-main">تواصل على واتساب</div><span class="wt-sub">01013100491</span></div>
+  </a>
+</div>
+
+<div class="ftr">
+  <p><strong>مصنع المروج للزيوت الطبيعية</strong> · For Medical and Natural Extracts</p>
+  <p style="margin-top:5px">الأسعار قابلة للتغيير · للتأكيد تواصل مع المبيعات</p>
+</div>
+
+<a href="https://wa.me/201013100491?text=السلام عليكم، عايز اعمل طلبية واستفيد بالخصم والبونص" class="waf" target="_blank">💬</a>
+
+<script>
+// Base prices (per liter, Level 4 — 95%+ Pure)
+const P=[
+  ["زيت خروع",661],
+  ["زيت الكتان",502],
+  ["زيت الصبار",642],
+  ["زيت اللوز المر",631],
+  ["زيت حبة البركة",1642],
+  ["زيت الجرجير",802],
+  ["زيت اللوز الحلو",1144],
+  ["زيت القرنفل",1782],
+  ["زيت السمسم",946],
+  ["زيت الحلبة",1269],
+  ["زيت الكافور",1034],
+  ["زيت الورد",749],
+  ["زيت الليمون",749],
+  ["زيت الخردل",1148],
+  ["زيت الرمان",1311],
+  ["زيت النعناع",958],
+  ["نعناع خام ع البارد",2466],
+  ["زيت المشمش",973],
+  ["زيت الزعتر",1395],
+  ["جوز هند طبيعي",980],
+  ["جوز هند بكر",1911],
+  ["زيت البرتقال",1041],
+  ["زيت جنين القمح",1311],
+  ["زيت القرفة",1501],
+  ["زيت الجوجوبا",1151],
+  ["زيت بذور العنب",1357],
+  ["زيت اليقطين",1478],
+  ["حشيشة الليمون",1307],
+  ["زيت التين الشوكي",1661],
+  ["زيت توت أسود",1566],
+  ["زيت أملج",1125],
+  ["زيت مورينجا",1091],
+  ["زيت جنزبيل",1490],
+  ["زيت الثوم",1121],
+  ["زيت العطر",1391],
+  ["شجرة الشاي",1543],
+  ["زيت لبان الدكر",1577],
+  ["زيت لافندر",1265],
+  ["زيت النيم",1482],
+  ["زيت الجينسينج",1710],
+  ["زيت الجزر",1512],
+  ["زيت الروزماري",1516],
+  ["زيت الأفوكادو",1524],
+  ["زيت الياسمين",1425],
+  ["زيت الأرجان",1531],
+  ["زيت السعد",1398],
+  ["زيت عرق سوس",1227],
+  ["الفول السوداني",1330],
+  ["البرافين الطبي",410],
+];
+
+// Size config: [label, ml, bottleFactor, halfQty, fullQty, packaging_premium]
+// bottle price = round(pricePerLiter * ml/1000 * premium)
+const SIZES = [
+  { label:"1 لتر",   ml:1000, factor:1.00,  halfQty:6,  fullQty:12, sub:"1000 مل" },
+  { label:"500 مل",  ml:500,  factor:1.15,  halfQty:12, fullQty:24, sub:"نص لتر"  },
+  { label:"250 مل",  ml:250,  factor:1.25,  halfQty:24, fullQty:48, sub:"ربع لتر" },
+  { label:"125 مل",  ml:125,  factor:1.38,  halfQty:24, fullQty:48, sub:"⅛ لتر"   },
+  { label:"30 مل",   ml:30,   factor:1.60,  halfQty:12, fullQty:24, sub:"مصغّر"   },
+];
+
+let currentSize = 0;
+let currentQuery = '';
+
+function fmt(n){ return Math.round(n).toLocaleString('ar-EG'); }
+
+function bottlePrice(perLiter, sizeIdx){
+  const s = SIZES[sizeIdx];
+  return Math.round(perLiter * (s.ml / 1000) * s.factor);
+}
+
+function updateHeaders(){
+  const s = SIZES[currentSize];
+  document.getElementById('hdrHalfSub').textContent  = `(${s.halfQty} زجاجة)`;
+  document.getElementById('hdrFullSub').textContent  = `(${s.fullQty} زجاجة)`;
+  document.getElementById('halfQtyLbl').textContent  = `${s.halfQty} زجاجة`;
+  document.getElementById('fullQtyLbl').textContent  = `${s.fullQty} زجاجة`;
+  document.getElementById('summSize').textContent    = s.label;
+}
+
+function render(data){
+  const s    = SIZES[currentSize];
+  const list = document.getElementById('list');
+  const nores= document.getElementById('nores');
+  list.innerHTML='';
+  data.forEach(([name, priceLtr], i)=>{
+    const bp   = bottlePrice(priceLtr, currentSize);
+    const half = bp * s.halfQty;
+    const full = bp * s.fullQty;
+    const d = document.createElement('div');
+    d.className = 'pr';
+    d.innerHTML = `
+      <div class="pn"><div class="pnum">${i+1}</div><span class="pn-txt">${name}</span></div>
+      <div class="pc"><div class="pv">${fmt(bp)}</div><div class="pl">جنيه</div></div>
+      <div class="ph"><div class="pv">${fmt(half)}</div><div class="pl">جنيه</div></div>
+      <div class="pf"><div class="pv">${fmt(full)}</div><div class="pl">جنيه</div></div>`;
+    list.appendChild(d);
+  });
+  document.getElementById('cnt').textContent = data.length;
+  nores.classList.toggle('show', data.length===0);
+  list.style.display = data.length ? '' : 'none';
+  updateHeaders();
+}
+
+function doFilter(){
+  currentQuery = document.getElementById('srch').value.trim();
+  const data = currentQuery ? P.filter(([n])=>n.includes(currentQuery)) : P;
+  render(data);
+}
+
+function selectSize(idx){
+  currentSize = idx;
+  document.querySelectorAll('.stab').forEach((t,i)=>t.classList.toggle('active', i===idx));
+  doFilter();
+}
+
+render(P);
+
+</script>
+</body>
+</html>
